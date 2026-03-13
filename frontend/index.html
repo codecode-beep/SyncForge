@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mini Trello</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mini Trello (Real-time)</h1>
+
+      <div class="card">
+        <label>Backend URL</label>
+        <input id="apiBase" placeholder="http://localhost:8000" />
+        <button id="saveBase">Save</button>
+      </div>
+
+      <div class="card">
+        <h2>Auth</h2>
+        <div class="row">
+          <input id="email" placeholder="email" />
+          <input id="password" placeholder="password" type="password" />
+        </div>
+        <div class="row">
+          <button id="registerBtn">Register</button>
+          <button id="loginBtn">Login</button>
+          <button id="logoutBtn">Logout</button>
+        </div>
+        <pre id="me"></pre>
+      </div>
+
+      <div class="card">
+        <h2>Boards</h2>
+        <div class="row">
+          <input id="boardName" placeholder="New board name" />
+          <button id="createBoardBtn">Create Board</button>
+          <button id="refreshBoardsBtn">Refresh</button>
+        </div>
+        <ul id="boardsList"></ul>
+      </div>
+
+      <div id="boardView" class="card hidden">
+        <h2 id="boardTitle"></h2>
+        <div class="row">
+          <input id="taskTitle" placeholder="Task title" />
+          <select id="columnSelect"></select>
+          <button id="createTaskBtn">Add Task</button>
+        </div>
+        <div id="columns" class="columns"></div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
