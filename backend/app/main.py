@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
 from .config import settings
 from .routers import auth
+from .routers import boards, columns, tasks
 
 app = FastAPI(title="Mini Trello (Real-time Task Board)")
 
@@ -19,6 +20,9 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(boards.router)
+app.include_router(columns.router)
+app.include_router(tasks.router)
 
 @app.get("/health")
 def health():

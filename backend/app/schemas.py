@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
+from typing import Optional, List
 
 class RegisterRequest(BaseModel):
     email: EmailStr
@@ -15,3 +16,47 @@ class TokenResponse(BaseModel):
 class MeResponse(BaseModel):
     id: str
     email: EmailStr
+
+class BoardCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+
+class BoardOut(BaseModel):
+    id: str
+    name: str
+    owner_id: str
+
+class ColumnCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    position: int = 0
+
+class ColumnOut(BaseModel):
+    id: str
+    board_id: str
+    name: str
+    position: int
+
+class TaskCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    description: Optional[str] = ""
+    position: int = 0
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+
+class TaskMove(BaseModel):
+    to_column_id: str
+    to_position: int = 0
+
+class TaskOut(BaseModel):
+    id: str
+    column_id: str
+    title: str
+    description: str
+    position: int
+    created_by: str
+
+class BoardSnapshot(BaseModel):
+    board: BoardOut
+    columns: List[ColumnOut]
+    tasks: List[TaskOut]
