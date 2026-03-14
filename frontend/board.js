@@ -3,7 +3,13 @@ let TOKEN = localStorage.getItem("TOKEN");
 let BOARD_ID = localStorage.getItem("BOARD_ID");
 
 const el = (id)=>document.getElementById(id);
-
+document.addEventListener("DOMContentLoaded", () => {
+  
+    el("createTask").onclick = createTask;
+  
+    loadBoard();
+  
+  });
 function headers(){
 return {
 "Content-Type":"application/json",
@@ -107,27 +113,30 @@ new Sortable(list,{
 
 async function createTask(){
 
-const title = el("taskTitle").value;
-const column = el("columnSelect").value;
+    const modal = el("taskModal");
+    
+    const title = el("taskTitle").value;
+    const column = el("columnSelect").value;
+    const email = el("taskEmail").value;
+    
+    if(!title) return;
+    
+    await api("/columns/"+column+"/tasks",{
+    method:"POST",
+    body:JSON.stringify({
+    title:title,
+    description:"Assigned to "+email
+    })
+    });
+    
+    el("taskTitle").value="";
+    el("taskEmail").value="";
+    
+    modal.classList.add("hidden");
+    
+    loadBoard();
+    }
 
-if(!title) return;
-
-await api("/columns/"+column+"/tasks",{
-method:"POST",
-body:JSON.stringify({
-title:title,
-description:""
-})
-});
-
-el("taskTitle").value="";
-loadBoard();
-}
-
-function back(){
-window.location.href="dashboard.html";
-}
-
-el("createTask").onclick=createTask;
-
-loadBoard();
+    function back(){
+        window.location.href = "dashboard.html";
+      }

@@ -6,21 +6,46 @@
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
 
-<h2 id="boardTitle"></h2>
+        <h2>Project: <span id="boardTitle"></span></h2>
+        
+        <button class="primaryBtn" onclick="document.getElementById('taskModal').classList.remove('hidden')">
+            + Add Task
+        </button>
+        
+        <div id="columns" class="columns"></div>
+        
+        <div class="boardFooter">
+            <button onclick="back()">Back</button>
+        </div>
+        
+    </div>
+    <div id="taskModal" class="modal hidden">
 
-<div class="row">
-    <input id="taskTitle" placeholder="Task">
-    <select id="columnSelect"></select>
-    <button id="createTask">Add</button>
-  </div>
-
-<div id="columns" class="columns"></div>
-
-<button onclick="back()">Back</button>
-
-</div>
+        <div class="modalContent">
+      
+          <h3>Create Task</h3>
+      
+          <label>Task Title</label>
+          <input id="taskTitle">
+      
+          <label>Assign Email</label>
+          <input id="taskEmail">
+      
+          <label>Status</label>
+          <select id="columnSelect"></select>
+      
+          <div class="modalButtons">
+            <button id="createTask">Add Task</button>
+            <button onclick="document.getElementById('taskModal').classList.add('hidden')">
+              Cancel
+            </button>
+          </div>
+      
+        </div>
+      
+      </div>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="./board.js"></script>
 </body>
