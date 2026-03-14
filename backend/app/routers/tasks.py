@@ -43,12 +43,13 @@ async def create_task(
     print(next_position)
 
     task = Task(
-        column_id=column_id,
-        title=payload.title,
-        description=payload.description or "",
-        position=next_position,
-        created_by=user.id,
-    )
+    column_id=column_id,
+    title=payload.title,
+    description=payload.description or "",
+    assigned_to=payload.assigned_to or "",
+    position=next_position,
+    created_by=user.id,
+   )
 
     db.add(task)
     db.commit()
@@ -64,6 +65,7 @@ async def create_task(
                 "column_id": task.column_id,
                 "title": task.title,
                 "description": task.description,
+                "assigned_to": task.assigned_to,
                 "position": task.position,
                 "created_by": task.created_by,
             },
@@ -71,13 +73,14 @@ async def create_task(
     )
 
     return TaskOut(
-        id=task.id,
-        column_id=task.column_id,
-        title=task.title,
-        description=task.description,
-        position=task.position,
-        created_by=task.created_by,
-    )
+    id=task.id,
+    column_id=task.column_id,
+    title=task.title,
+    description=task.description,
+    assigned_to=task.assigned_to,  
+    position=task.position,
+    created_by=task.created_by,
+)
 
 
 # ✅ UPDATE TASK (NOW ASYNC)
@@ -99,7 +102,10 @@ async def update_task(
     if payload.title is not None:
         task.title = payload.title
     if payload.description is not None:
-        task.description = payload.description
+       task.description = payload.description
+
+    if payload.assigned_to is not None:
+       task.assigned_to = payload.assigned_to
 
     db.commit()
     db.refresh(task)
@@ -114,6 +120,7 @@ async def update_task(
                 "column_id": task.column_id,
                 "title": task.title,
                 "description": task.description,
+                "assigned_to": task.assigned_to,
                 "position": task.position,
                 "created_by": task.created_by,
             },
@@ -121,13 +128,14 @@ async def update_task(
     )
 
     return TaskOut(
-        id=task.id,
-        column_id=task.column_id,
-        title=task.title,
-        description=task.description,
-        position=task.position,
-        created_by=task.created_by,
-    )
+    id=task.id,
+    column_id=task.column_id,
+    title=task.title,
+    description=task.description,
+    assigned_to=task.assigned_to,   
+    position=task.position,
+    created_by=task.created_by,
+)
 
 
 # ✅ MOVE TASK (NOW ASYNC)
@@ -188,6 +196,7 @@ async def move_task(
                 "column_id": task.column_id,
                 "title": task.title,
                 "description": task.description,
+                "assigned_to": task.assigned_to,
                 "position": task.position,
                 "created_by": task.created_by,
             },
@@ -199,6 +208,7 @@ async def move_task(
         column_id=task.column_id,
         title=task.title,
         description=task.description,
+        assigned_to=task.assigned_to,  
         position=task.position,
         created_by=task.created_by,
     )

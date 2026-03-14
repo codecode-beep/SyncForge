@@ -24,6 +24,8 @@ class BoardOut(BaseModel):
     id: str
     name: str
     owner_id: str
+    owner_email: str
+    created_at: str
 
 class ColumnCreate(BaseModel):
     name: str = Field(min_length=1, max_length=100)
@@ -38,11 +40,13 @@ class ColumnOut(BaseModel):
 class TaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     description: Optional[str] = ""
+    assigned_to: Optional[str] = ""   # ← ADD
     position: int = 0
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
+    assigned_to: Optional[str] = None   # ← ADD
 
 class TaskMove(BaseModel):
     to_column_id: str
@@ -53,6 +57,7 @@ class TaskOut(BaseModel):
     column_id: str
     title: str
     description: str
+    assigned_to: str     # ← ADD
     position: int
     created_by: str
 

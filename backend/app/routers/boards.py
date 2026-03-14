@@ -22,7 +22,13 @@ def create_board(payload: BoardCreate, db: Session = Depends(get_db), user: User
     ])
     db.commit()
 
-    return BoardOut(id=board.id, name=board.name, owner_id=board.owner_id)
+    return BoardOut(
+        id=board.id,
+        name=board.name,
+        owner_id=board.owner_id,
+        owner_email=user.email,
+        created_at=str(board.created_at)
+    )
 
 # @router.get("", response_model=list[BoardOut])
 # def list_boards(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
@@ -40,7 +46,16 @@ def list_boards(db: Session = Depends(get_db), user: User = Depends(get_current_
 
     boards = owned.union(member).order_by(Board.created_at.desc()).all()
 
-    return [BoardOut(id=b.id, name=b.name, owner_id=b.owner_id) for b in boards]
+    return [
+        BoardOut(
+            id=b.id,
+            name=b.name,
+            owner_id=b.owner_id,
+            owner_email=b.owner.email,
+            created_at=str(b.created_at)
+        )
+        for b in boards
+    ]
 
 @router.get("/{board_id}", response_model=BoardSnapshot)
 def get_board_snapshot(board_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
@@ -56,9 +71,15 @@ def get_board_snapshot(board_id: str, db: Session = Depends(get_db), user: User 
         tasks = db.query(Task).filter(Task.column_id.in_(col_ids)).order_by(Task.position.asc()).all()
 
     return BoardSnapshot(
-        board=BoardOut(id=board.id, name=board.name, owner_id=board.owner_id),
+        board=BoardOut(
+            id=board.id,
+            name=board.name,
+            owner_id=board.owner_id,
+            owner_email=board.owner.email,
+            created_at=str(board.created_at)
+        ),
         columns=[{"id": c.id, "board_id": c.board_id, "name": c.name, "position": c.position} for c in cols],
-        tasks=[{"id": t.id, "column_id": t.column_id, "title": t.title, "description": t.description or "", "position": t.position, "created_by": t.created_by} for t in tasks],
+        tasks=[{"id": t.id, "column_id": t.column_id, "title": t.title, "description": t.description or "","assigned_to": t.assigned_to, "position": t.position, "created_by": t.created_by} for t in tasks],
     )
 
 @router.delete("/{board_id}")

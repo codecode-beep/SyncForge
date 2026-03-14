@@ -1,55 +1,102 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Board</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h2>Project: <span id="boardTitle"></span></h2>
-        <div class="inviteRow">
-            <input id="inviteEmail" placeholder="User email">
-            <button onclick="inviteUser()" class="primaryBtn">Invite</button>
-        </div>
-        <button class="primaryBtn" onclick="document.getElementById('taskModal').classList.remove('hidden')">
-            + Add Task
-        </button>
-        
-        <div id="columns" class="columns"></div>
-        
-        <div class="boardFooter">
-            <button onclick="back()">Back</button>
-        </div>
-        
-    </div>
-    <div id="taskModal" class="modal hidden">
+<div class="boardHeader">
 
-        <div class="modalContent">
-      
-          <h3>Create Task</h3>
-      
-          <label>Task Title</label>
-          <input id="taskTitle">
-      
-          <label>Assign Email</label>
-          <input id="taskEmail">
-      
-          <label>Status</label>
-          <select id="columnSelect"></select>
-      
-          <div class="modalButtons">
-            <button id="createTask">Add Task</button>
-            <button onclick="document.getElementById('taskModal').classList.add('hidden')">
-              Cancel
-            </button>
-          </div>
-      
-        </div>
-      
-      </div>
+<div class="boardHeaderTop">
+<h2>Project: <span id="boardTitle"></span></h2>
+
+<button class="primaryBtn addTaskBtn"
+onclick="document.getElementById('taskModal').classList.remove('hidden')">
++ Add Task
+</button>
+</div>
+
+<div class="inviteRow">
+<input id="inviteEmail" placeholder="Invite user email">
+<button id="inviteBtn" class="inviteBtn">Invite</button>
+</div>
+
+</div>
+
+<div id="columns" class="columns"></div>
+
+<div class="boardFooter">
+<button onclick="back()">Back</button>
+</div>
+
+</div>
+
+<!-- CREATE TASK MODAL -->
+
+<div id="taskModal" class="modal hidden">
+
+<div class="modalContent">
+
+<h3>Create Task</h3>
+
+<label>Task Title</label>
+<input id="taskTitle">
+
+<label>Assign Email</label>
+<input id="taskEmail">
+
+<label>Description</label>
+<textarea id="taskDescription"></textarea>
+
+<label>Status</label>
+<select id="columnSelect"></select>
+
+<div class="modalButtons">
+<button id="createTask">Add Task</button>
+<button onclick="document.getElementById('taskModal').classList.add('hidden')">
+Cancel
+</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- EDIT TASK MODAL -->
+
+<div id="editTaskModal" class="modal hidden">
+
+<div class="modalContent">
+
+<h3>Edit Task</h3>
+
+<label>Title</label>
+<input id="editTaskTitle">
+
+<label>Assign Email</label>
+<input id="editTaskEmail">
+
+<label>Description</label>
+<textarea id="editTaskDesc"></textarea>
+
+<label>Created</label>
+<div id="editTaskCreated"></div>
+
+<div class="modalButtons">
+<button id="updateTaskBtn">Update</button>
+<button onclick="closeEditTask()">Cancel</button>
+</div>
+
+</div>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="./board.js"></script>
+
 </body>
 </html>

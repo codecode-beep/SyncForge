@@ -54,8 +54,8 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
   .boardCard{
     background:white;
     border-radius:10px;
-    padding:16px;
-    height:120px;
+    padding:18px;
+    height:140px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
     position:relative;
     cursor:pointer;
@@ -74,8 +74,9 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
   }
   
   .boardCard h3{
-    text-align:center;
-    margin-top:30px;
+    margin:0;
+    font-size:20px;
+    font-weight:600;
   }
   .boardFooter{
     margin-top:40px;
@@ -157,6 +158,10 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
     font-size:16px;
     cursor:pointer;
   }
+
+  .logoutBtn{
+    margin-top:40px;
+  }
   
   /* SIGNUP BUTTON */
   
@@ -176,18 +181,6 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
     color:red;
     margin-top:10px;
     font-size:14px;
-  }
-
-  .primaryBtn{
-    width:100%;
-    padding:12px;
-    margin-top:20px;
-    border:none;
-    border-radius:8px;
-    background:#6C5CE7;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
   }
   
   .primaryBtn:hover{
@@ -308,12 +301,118 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
   .inviteRow{
     display:flex;
     gap:10px;
-    margin-bottom:15px;
-    }
+    align-items:center;
+  }
     
     .inviteRow input{
-    padding:8px;
-    border:1px solid #ccc;
-    border-radius:4px;
-    width:220px;
+    width:250px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
     }
+    
+    .inviteBtn{
+    width:auto;
+    padding:10px 18px;
+    background:#6C5CE7;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    }
+    .boardMeta{
+        position:absolute;
+        bottom:12px;
+        left:16px;
+        font-size:13px;
+        color:#666;
+        line-height:1.4;
+      }
+    
+      .boardCardHeader h3{
+        margin:0;
+        font-size:20px;
+      }
+      
+      .boardCardMeta{
+        margin-top:10px;
+        font-size:13px;
+        color:#555;
+      }
+      
+      .boardCardMeta div{
+        margin-top:4px;
+      }
+
+      .boardHeader{
+        background:white;
+        padding:16px;
+        border-radius:10px;
+        box-shadow:0 2px 10px rgba(0,0,0,.06);
+        margin-bottom:20px;
+      }
+      
+      .boardHeaderTop{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:15px;
+      }
+      
+      .boardHeaderTop h2{
+        font-size:22px;
+        font-weight:600;
+      }
+      
+      .addTaskBtn{
+        width:auto;
+      }
+
+      .taskHeader{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        }
+        
+        .taskMenu{
+        position:relative;
+        cursor:pointer;
+        }
+        
+        .taskDropdown{
+        display:none;
+        position:absolute;
+        right:0;
+        top:20px;
+        background:white;
+        border:1px solid #ddd;
+        border-radius:6px;
+        box-shadow:0 2px 8px rgba(0,0,0,.1);
+        }
+        
+        .taskDropdown button{
+        display:block;
+        border:none;
+        background:white;
+        padding:8px 12px;
+        width:100%;
+        cursor:pointer;
+        }
+        
+        .taskDropdown button:hover{
+        background:#f2f2f2;
+        }
+
+        .taskDesc{
+            font-size:13px;
+            color:#666;
+            margin-top:4px;
+            }
+        
+            .task{
+                cursor:grab;
+                }
+                
+                .task:active{
+                cursor:grabbing;
+                }

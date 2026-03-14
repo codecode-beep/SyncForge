@@ -24,22 +24,29 @@ async function loadBoards(){
   
       const card = document.createElement("div");
       card.className="boardCard";
-  
+      const createdDate = new Date(b.created_at).toLocaleDateString();
       card.innerHTML = `
         <div class="boardCardContent">
 
             <div class="boardMenu">
-            <span onclick="toggleMenu(event)">&#8942;</span>
+                <span onclick="toggleMenu(event)">⋮</span>
 
-            <div class="menuDropdown">
-                <button onclick="deleteBoard('${b.id}')">Delete</button>
-            </div>
+                <div class="menuDropdown">
+                    <button onclick="deleteBoard('${b.id}')">Delete</button>
+                </div>
             </div>
 
-            <h3>${b.name}</h3>
+            <div class="boardCardHeader">
+                <h3>${b.name}</h3>
+            </div>
+
+            <div class="boardCardMeta">
+                <div><i>👤</i> ${b.owner_email}</div>
+                <div><i>📅</i> ${createdDate}</div>
+            </div>
 
         </div>
-        `;
+       `;
   
       // double click → open board
       card.ondblclick = ()=>{
