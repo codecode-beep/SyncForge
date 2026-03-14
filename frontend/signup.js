@@ -7,28 +7,27 @@ async function api(path, opts={}) {
   return data;
 }
 
-async function login() {
+async function register(){
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  try {
+  try{
 
-    const tok = await api("/auth/login", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({email,password})
+    await api("/auth/register",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,password})
     });
 
-    localStorage.setItem("TOKEN", tok.access_token);
+    alert("Registered successfully! Please login.");
 
-    window.location.href = "dashboard.html";
+    window.location.href="login.html";
 
-  }
-  catch(e){
+  }catch(e){
     document.getElementById("error").innerText = e.message;
   }
 
 }
 
-document.getElementById("loginBtn").onclick = login;
+document.getElementById("signupBtn").onclick = register;

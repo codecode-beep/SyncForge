@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SyncForge Login</title>
+<title>SyncForge Sign Up</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,8 +14,8 @@
 
     <h2 class="logo">SYNCFORGE</h2>
 
-    <h1>Welcome Back 👋</h1>
-    <p class="subtitle">SignIn to continue</p>
+    <h1>Create Account</h1>
+    <p class="subtitle">Sign up to start managing your tasks</p>
 
     <label>Email</label>
     <input id="email" placeholder="you@example.com">
@@ -23,18 +23,21 @@
     <label>Password</label>
     <input id="password" type="password" placeholder="••••••••">
 
-    <button id="loginBtn">Sign In</button>
-
-    <button onclick="window.location.href='signup.html'" class="signupBtn">
-      Create Account
+    <button id="signupBtn" class="primaryBtn">
+      Sign Up
     </button>
+
+    <button onclick="window.location.href='login.html'" class="signupBtn">
+      Back to Login
+    </button>
+
     <p id="error"></p>
 
   </div>
 
 </div>
 
-<script src="login.js"></script>
+<script src="signup.js"></script>
 
 </body>
 </html>
