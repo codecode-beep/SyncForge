@@ -5,6 +5,7 @@ from ..deps import get_current_user
 from ..models import Board, Column, Task, User
 from ..schemas import TaskCreate, TaskOut, TaskUpdate, TaskMove
 from ..websocket_manager import manager
+from sqlalchemy import func
 
 router = APIRouter(tags=["tasks"])
 
@@ -33,12 +34,20 @@ async def create_task(
 
     if board.owner_id != user.id:
         raise HTTPException(status_code=403, detail="Not allowed")
+    
+    max_pos = db.query(func.max(Task.position))\
+                .filter(Task.column_id == column_id)\
+                .scalar()
+    print(max_pos)
+
+    next_position = (max_pos + 1) if max_pos is not None else 0
+    print(next_position)
 
     task = Task(
         column_id=column_id,
         title=payload.title,
         description=payload.description or "",
-        position=payload.position,
+        position=next_position,
         created_by=user.id,
     )
 
@@ -144,8 +153,30 @@ async def move_task(
     if not to_col or to_col.board_id != board.id:
         raise HTTPException(status_code=400, detail="Invalid destination column")
 
+   # move task to new column first
     task.column_id = payload.to_column_id
-    task.position = payload.to_position
+
+    # fetch tasks in destination column
+    tasks = db.query(Task)\
+        .filter(Task.column_id == payload.to_column_id)\
+        .order_by(Task.position)\
+        .all()
+
+    # remove moving task
+    tasks = [t for t in tasks if t.id != task.id]
+
+    # insert at new position
+    tasks.insert(payload.to_position, task)
+
+    # temporarily shift positions to avoid duplicate constraint
+    for i, t in enumerate(tasks):
+        t.position = i + 1000
+
+    db.flush()
+
+    # now assign correct positions
+    for i, t in enumerate(tasks):
+        t.position = i
 
     db.commit()
     db.refresh(task)
