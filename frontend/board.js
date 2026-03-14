@@ -258,6 +258,8 @@ method:"DELETE"
 }
 
 function openEditTask(task){
+console.log("Task data:", task);
+
 
 CURRENT_TASK_ID = task.id;
 
@@ -268,8 +270,6 @@ const desc = task.description || "";
 el("editTaskEmail").value = task.assigned_to || "";
 
 el("editTaskDesc").value=desc;
-
-el("editTaskCreated").innerText="Task ID: "+task.id;
 
 el("editTaskModal").classList.remove("hidden");
 

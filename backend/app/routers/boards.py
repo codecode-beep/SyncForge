@@ -79,7 +79,7 @@ def get_board_snapshot(board_id: str, db: Session = Depends(get_db), user: User 
             created_at=str(board.created_at)
         ),
         columns=[{"id": c.id, "board_id": c.board_id, "name": c.name, "position": c.position} for c in cols],
-        tasks=[{"id": t.id, "column_id": t.column_id, "title": t.title, "description": t.description or "","assigned_to": t.assigned_to, "position": t.position, "created_by": t.created_by} for t in tasks],
+        tasks=[{"id": t.id, "column_id": t.column_id, "title": t.title, "description": t.description or "","assigned_to": t.assigned_to, "position": t.position, "created_by": t.created_by,"created_at": str(board.created_at)} for t in tasks],
     )
 
 @router.delete("/{board_id}")
