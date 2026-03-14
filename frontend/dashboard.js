@@ -14,20 +14,41 @@ async function api(path, opts={}){
 }
 
 async function loadBoards(){
-  const boards = await api("/boards");
+    const boards = await api("/boards");
+  
+    const container = document.getElementById("boards");
+    
+    container.innerHTML="";
+  
+    boards.forEach(b=>{
+  
+      const card = document.createElement("div");
+      card.className="boardCard";
+  
+      card.innerHTML = `
+        <div class="boardCardContent">
 
-  const ul = document.getElementById("boards");
-  ul.innerHTML="";
+            <div class="boardMenu">
+            <span onclick="toggleMenu(event)">&#8942;</span>
 
-  boards.forEach(b=>{
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${b.name}
-      <button onclick="openBoard('${b.id}')">Open</button>
-    `;
-    ul.appendChild(li);
-  });
-}
+            <div class="menuDropdown">
+                <button onclick="deleteBoard('${b.id}')">Delete</button>
+            </div>
+            </div>
+
+            <h3>${b.name}</h3>
+
+        </div>
+        `;
+  
+      // double click → open board
+      card.ondblclick = ()=>{
+        openBoard(b.id);
+      }
+  
+      container.appendChild(card);
+    });
+  }
 
 function openBoard(id){
   localStorage.setItem("BOARD_ID", id);
@@ -53,3 +74,26 @@ function logout(){
 document.getElementById("createBoard").onclick=createBoard;
 
 loadBoards();
+
+async function deleteBoard(id){
+
+    if(!confirm("Delete this board?")) return;
+  
+    await api("/boards/"+id,{
+      method:"DELETE"
+    });
+  
+    loadBoards();
+  }
+
+  function toggleMenu(event){
+    event.stopPropagation();
+  
+    const menu = event.target.nextElementSibling;
+  
+    document.querySelectorAll(".menuDropdown").forEach(m=>{
+      if(m !== menu) m.style.display = "none";
+    });
+  
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }

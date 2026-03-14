@@ -1,28 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Mini Trello - Login</title>
-  <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<title>SyncForge Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-  <div class="card">
-    <h2>Login</h2>
+<div class="loginContainer">
 
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+  <div class="loginCard">
 
-    <div class="row">
-      <button id="loginBtn">Login</button>
-      <button id="registerBtn">Sign Up</button>
-    </div>
+    <h2 class="logo">SYNCFORGE</h2>
+
+    <h1>Welcome Back 👋</h1>
+    <p class="subtitle">SignIn to continue</p>
+
+    <label>Email</label>
+    <input id="email" placeholder="you@example.com">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="••••••••">
+
+    <button id="loginBtn">Sign In</button>
+
+    <button id="registerBtn" class="signupBtn">
+      Create Account
+    </button>
 
     <p id="error"></p>
+
   </div>
+
 </div>
 
-<script src="./login.js"></script>
+<script src="login.js"></script>
+
 </body>
 </html>
