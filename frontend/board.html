@@ -9,7 +9,10 @@
     <div class="container">
 
         <h2>Project: <span id="boardTitle"></span></h2>
-        
+        <div class="inviteRow">
+            <input id="inviteEmail" placeholder="User email">
+            <button onclick="inviteUser()" class="primaryBtn">Invite</button>
+        </div>
         <button class="primaryBtn" onclick="document.getElementById('taskModal').classList.remove('hidden')">
             + Add Task
         </button>

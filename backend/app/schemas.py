@@ -60,3 +60,6 @@ class BoardSnapshot(BaseModel):
     board: BoardOut
     columns: List[ColumnOut]
     tasks: List[TaskOut]
+
+class InviteUser(BaseModel):
+    email: EmailStr

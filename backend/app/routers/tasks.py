@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..database import get_db
 from ..deps import get_current_user
-from ..models import Board, Column, Task, User
+from ..models import Board, Column, Task, User, BoardMember
 from ..schemas import TaskCreate, TaskOut, TaskUpdate, TaskMove
 from ..websocket_manager import manager
 from sqlalchemy import func
@@ -32,8 +32,7 @@ async def create_task(
 ):
     board = _get_board_for_column(db, column_id)
 
-    if board.owner_id != user.id:
-        raise HTTPException(status_code=403, detail="Not allowed")
+    check_board_access(db, board, user.id)
     
     max_pos = db.query(func.max(Task.position))\
                 .filter(Task.column_id == column_id)\
@@ -95,8 +94,7 @@ async def update_task(
 
     board = _get_board_for_column(db, task.column_id)
 
-    if board.owner_id != user.id:
-        raise HTTPException(status_code=403, detail="Not allowed")
+    check_board_access(db, board, user.id)
 
     if payload.title is not None:
         task.title = payload.title
@@ -146,8 +144,7 @@ async def move_task(
 
     board = _get_board_for_column(db, task.column_id)
 
-    if board.owner_id != user.id:
-        raise HTTPException(status_code=403, detail="Not allowed")
+    check_board_access(db, board, user.id)
 
     to_col = db.get(Column, payload.to_column_id)
     if not to_col or to_col.board_id != board.id:
@@ -220,8 +217,7 @@ async def delete_task(
 
     board = _get_board_for_column(db, task.column_id)
 
-    if board.owner_id != user.id:
-        raise HTTPException(status_code=403, detail="Not allowed")
+    check_board_access(db, board, user.id)
 
     db.delete(task)
     db.commit()
@@ -236,3 +232,18 @@ async def delete_task(
     )
 
     return {"ok": True}
+
+def check_board_access(db: Session, board: Board, user_id: str):
+
+    if board.owner_id == user_id:
+        return True
+
+    member = db.query(BoardMember).filter(
+        BoardMember.board_id == board.id,
+        BoardMember.user_id == user_id
+    ).first()
+
+    if member:
+        return True
+
+    raise HTTPException(status_code=403, detail="Not allowed")

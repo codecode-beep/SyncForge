@@ -304,3 +304,16 @@ pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow
   .modalButtons button:first-child:hover{
     background:#5748d6;
   }
+
+  .inviteRow{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+    }
+    
+    .inviteRow input{
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    width:220px;
+    }

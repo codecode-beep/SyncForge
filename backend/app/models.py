@@ -25,6 +25,24 @@ class Board(Base):
 
     owner = relationship("User", back_populates="boards_owned")
     columns = relationship("Column", back_populates="board", cascade="all, delete-orphan")
+    members = relationship("BoardMember", back_populates="board", cascade="all, delete-orphan")
+
+class BoardMember(Base):
+    __tablename__ = "board_members"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uuid_str)
+
+    board_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("boards.id"), index=True
+    )
+
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id"), index=True
+    )
+
+    joined_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    board = relationship("Board", back_populates="members")
 
 class Column(Base):
     __tablename__ = "columns"
@@ -39,6 +57,7 @@ class Column(Base):
     __table_args__ = (
         UniqueConstraint("board_id", "position", name="uq_column_board_position"),
     )
+
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -55,3 +74,4 @@ class Task(Base):
     __table_args__ = (
         UniqueConstraint("column_id", "position", name="uq_task_column_position"),
     )
+

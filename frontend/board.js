@@ -1,15 +1,45 @@
 let API_BASE = "http://localhost:8000";
 let TOKEN = localStorage.getItem("TOKEN");
 let BOARD_ID = localStorage.getItem("BOARD_ID");
+let WS = null;
+
+function connectWS(){
+
+const url = `ws://localhost:8000/ws/boards/${BOARD_ID}?token=${TOKEN}`;
+
+WS = new WebSocket(url);
+
+WS.onopen = () => {
+    console.log("WebSocket connected");
+};
+
+WS.onmessage = (event) => {
+
+    const data = JSON.parse(event.data);
+
+    console.log("WS EVENT:", data);
+
+    // easiest approach
+    loadBoard();
+
+};
+
+WS.onclose = () => {
+    console.log("WebSocket disconnected");
+};
+
+}
 
 const el = (id)=>document.getElementById(id);
 document.addEventListener("DOMContentLoaded", () => {
-  
+
     el("createTask").onclick = createTask;
-  
+
+    connectWS();
+
     loadBoard();
-  
-  });
+
+});
 function headers(){
 return {
 "Content-Type":"application/json",
@@ -134,9 +164,21 @@ async function createTask(){
     
     modal.classList.add("hidden");
     
-    loadBoard();
     }
 
     function back(){
         window.location.href = "dashboard.html";
       }
+
+    async function inviteUser(){
+
+        const email = document.getElementById("inviteEmail").value
+        
+        await api(`/boards/${BOARD_ID}/invite`,{
+        method:"POST",
+        body:JSON.stringify({email})
+        })
+        
+        alert("User invited")
+        
+    }
