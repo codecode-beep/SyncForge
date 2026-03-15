@@ -9,13 +9,19 @@ from .websocket_manager import manager
 
 app = FastAPI(title="Mini Trello (Real-time Task Board)")
 
-Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+def startup():
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Database connected")
+    except Exception as e:
+        print("Database connection failed:", e)
 
 allowed = [o.strip() for o in settings.ALLOWED_ORIGINS.split(",")] if settings.ALLOWED_ORIGINS else ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
