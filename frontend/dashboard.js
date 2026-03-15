@@ -1,4 +1,4 @@
-let API_BASE = "http://localhost:8000";
+let API_BASE = "https://syncforge-0ov1.onrender.com";
 let TOKEN = localStorage.getItem("TOKEN");
 
 function headers(){

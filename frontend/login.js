@@ -1,4 +1,4 @@
-let API_BASE = "http://localhost:8000";
+let API_BASE = "https://syncforge-0ov1.onrender.com";
 
 async function api(path, opts={}) {
   const res = await fetch(API_BASE + path, opts);

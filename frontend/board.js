@@ -1,4 +1,4 @@
-let API_BASE = "http://localhost:8000";
+let API_BASE = "https://syncforge-0ov1.onrender.com";
 let TOKEN = localStorage.getItem("TOKEN");
 let BOARD_ID = localStorage.getItem("BOARD_ID");
 
@@ -24,7 +24,7 @@ loadBoard();
 
 function connectWS(){
 
-const url = `ws://localhost:8000/ws/boards/${BOARD_ID}?token=${TOKEN}`;
+const url = `wss://syncforge-0ov1.onrender.com/ws/boards/${BOARD_ID}?token=${TOKEN}`;
 
 WS = new WebSocket(url);
 
