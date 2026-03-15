@@ -18,10 +18,12 @@ def startup():
         print("Database connection failed:", e)
 
 allowed = [o.strip() for o in settings.ALLOWED_ORIGINS.split(",")] if settings.ALLOWED_ORIGINS else ["*"]
+origins = [
+   "https://sync-forge-six.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
