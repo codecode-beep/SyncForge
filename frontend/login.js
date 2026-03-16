@@ -20,7 +20,7 @@ async function login() {
       body: JSON.stringify({email,password})
     });
 
-    localStorage.setItem("TOKEN", tok.access_token);
+    sessionStorage.setItem("TOKEN", tok.access_token);
 
     window.location.href = "dashboard.html";
 

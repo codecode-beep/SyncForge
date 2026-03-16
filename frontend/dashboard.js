@@ -1,5 +1,5 @@
 let API_BASE = "https://syncforge-0ov1.onrender.com";
-let TOKEN = localStorage.getItem("TOKEN");
+let TOKEN = sessionStorage.getItem("TOKEN");
 
 function headers(){
   return {
@@ -58,7 +58,7 @@ async function loadBoards(){
   }
 
 function openBoard(id){
-  localStorage.setItem("BOARD_ID", id);
+  sessionStorage.setItem("BOARD_ID", id);
   window.location.href="board.html";
 }
 
@@ -74,7 +74,7 @@ async function createBoard(){
 }
 
 function logout(){
-  localStorage.removeItem("TOKEN");
+  sessionStorage.removeItem("TOKEN");
   window.location.href="login.html";
 }
 

@@ -1,6 +1,6 @@
 let API_BASE = "https://syncforge-0ov1.onrender.com";
-let TOKEN = localStorage.getItem("TOKEN");
-let BOARD_ID = localStorage.getItem("BOARD_ID");
+let TOKEN = sessionStorage.getItem("TOKEN");
+let BOARD_ID = sessionStorage.getItem("BOARD_ID");
 
 let WS = null;
 let CURRENT_TASK_ID = null;
